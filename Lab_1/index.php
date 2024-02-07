@@ -7,7 +7,7 @@
 </head>
 <body>
     <header style="display:flex; flex-direction:row;box-sizing:border-box; margin:0;font-size:18px;font-family:monospace;"> 
-        <img style="height: 85px;margin-top:10px;margin-right:50px;" src='http://localhost/server-side_development/Lab_1/image/Logo_Polytech_rus_main.jpg'>
+        <img style="height: 85px;margin-top:10px;margin-right:50px;" src='http://localhost/server-side_development/image/Logo_Polytech_rus_main.jpg'>
         <h1>Hello, World!</h1>
     </header>
     <main>
