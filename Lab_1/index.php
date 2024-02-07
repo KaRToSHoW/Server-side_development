@@ -13,14 +13,15 @@
     <main>
         <h2 style="font-size:22px;">
             <?php
-                // $a = 20;
-                // $b = 40;
-                // echo $a+$b;
-                // echo ' < ';
-                // if ($a < $b){
-                //     echo $a*$b;
-                // }
-                // echo '<br> Hello, World! Today: '.date("d.m.y").'<br>';
+                $a = 20;
+                $b = 40;
+                echo $a+$b;
+                echo ' < ';
+                if ($a < $b){
+                    echo $a*$b;
+                }
+                echo '<br> Hello, World! Today: '.date("d.m.y").'<br>';
+                
                 // $a= 1; $b = 3; $c = 4;
                 // switch ($a + $b) {
                 //     case 7:
