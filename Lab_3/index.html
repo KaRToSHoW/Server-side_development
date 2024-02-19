@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab_3</title>
+    <style>
+        .form__div{
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <header style="display:flex; flex-direction:row;box-sizing:border-box; margin:0;font-size:18px;font-family:monospace;"> 
+        <img style="height: 85px;margin-top:10px;margin-right:50px;" src='http://localhost/server-side_development/image/Logo_Polytech_rus_main.jpg'>
+        <h1>feedback form</h1>
+    </header>
+    <main>
+        <form action="https://httpbin.org/post" method="post" class="form">
+            <div class="form__div">
+                <label for="name">Ваше имя</label>
+                <input type="text" name="name" id="name">
+            </div>
+            <div class="form__div">
+                <label for="surname">Ваша фамилия</label>
+                <input type="text" name="surname" id="surname">
+            </div>
+            <div class="form__div">
+                <label for="surname_2">Ваше отчество</label>
+                <input type="text" name="surname_2" id="surname_2">
+            </div>
+            <div class="form__div">
+                <textarea name="textarea" id="textarea" cols="30" rows="10"></textarea>
+            </div>
+            <button type="submit">Send</button>
+        </form>
+        <a href="index.php">Next</a>
+    </main>
+    <footer>
+    </footer>
+</body>
+</html>
