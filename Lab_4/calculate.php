@@ -49,6 +49,7 @@
             border: solid 1px black;
             height: 21px;
             transition: background-color 0.2s linear;
+            cursor: pointer;
         }
         .clear:hover{
             background-color: #b84dff;
@@ -59,6 +60,7 @@
             border: solid 1px black;
             width: 21px;
             transition: background-color 0.2s linear;
+            cursor: pointer;
         }
         .pins:hover{
             background-color: #b84dff;
@@ -69,6 +71,7 @@
             border: solid 1px black;
             height: 21px;
             transition: background-color 0.2s linear;
+            cursor: pointer;
         }
         .eval:hover{
             background-color: #b84dff;
