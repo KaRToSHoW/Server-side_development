@@ -207,7 +207,7 @@
                                 $end++;
                             }
                             $new_val = substr($val, 0, $start);
-                            $new_val .= calculate(substr($val, $start + 1, $end - $start - 2));
+                            $new_val .= calculateSq(substr($val, $start + 1, $end - $start - 2));
                             $new_val .= substr($val, $end);
                             
                             return calculate($new_val);
@@ -217,6 +217,7 @@
                             echo $res;
                         };
                         ?>
+                        
                     </div>
                 </div>
 
