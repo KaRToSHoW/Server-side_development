@@ -121,7 +121,7 @@
                                         $arg = calculate($arg);
                                     }
 
-                                    $sum += $arg;
+                                    $sum += (int)$arg;
                                 }
                                 return $sum;
                             }
@@ -138,7 +138,7 @@
                                     if (!is_numeric($args[$i])) {
                                         $args[$i] = calculate($args[$i]);
                                     }
-                                    $minusRez -= $args[$i];
+                                    $minusRez -= (int)$args[$i];
                                 }
                                 return $minusRez;
                             }
@@ -152,7 +152,7 @@
                                     if (!isNum($arg)) {
                                         $arg = calculate($args[$i]);
                                     }
-                                    $sup *= $arg;
+                                    $sup *= (int)$arg;
                                 }
                                 return $sup;
                             }
@@ -170,7 +170,7 @@
                                     if ($args[$i] == 0) {
                                         return "Делить на 0 нельзя";
                                     } else {
-                                        $del /= $args[$i];
+                                        $del /= (int)$args[$i];
                                     }
                                 }
                                 return $del;
@@ -195,22 +195,22 @@
                         }
 
                         function calculateSq($val)
-                        { //1+(2+3)
+                        {
                             if (!SqValidator($val)) return 'Неправильная расстановка скобок';
-                            $start = strpos($val, '('); //start = 2
+                            $start = strpos($val, '('); 
                             if ($start === false) return calculate($val);
-                            $end = $start + 1; //end = 3
+                            $end = $start + 1;
                             $open = 1;
                             while ($open && $end < strlen($val)) {
                                 if ($val[$end] == '(') $open++;
-                                if ($val[$end] == ')') $open--; //open = 0 end = 6
-                                $end++; //3 4 5 
+                                if ($val[$end] == ')') $open--;
+                                $end++;
                             }
                             $new_val = substr($val, 0, $start);
-                            $new_val .= calculateSq(substr($val, $start + 1, $end - $start - 2));
+                            $new_val .= calculate(substr($val, $start + 1, $end - $start - 2));
                             $new_val .= substr($val, $end);
-
-                            return calculateSq($new_val);
+                            
+                            return calculate($new_val);
                         }
                         if (isset($_POST['equation'])) {
                             $res = calculateSq($_POST['equation']);
