@@ -1,1 +1,1 @@
-New calculator
+clear
