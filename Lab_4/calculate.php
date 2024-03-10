@@ -16,7 +16,7 @@
         .wrapper {
             margin-top: 40px;
             background-color: #6666ff;
-            height: 200px;
+            height: 240px;
             width: 200px;
             padding: 10px;
             border-radius: 10px;
@@ -58,9 +58,10 @@
         .pins{
             background-color: pink;
             border: solid 1px black;
-            width: 21px;
+            width: 25px;
             transition: background-color 0.2s linear;
             cursor: pointer;
+            padding: 1px;
         }
         .pins:hover{
             background-color: #b84dff;
@@ -194,23 +195,44 @@
                             return true;
                         }
 
+                        function calculateTrig($val, $func)
+                        {
+                            if (!is_numeric($val)) {
+                                $val = calculate($val);
+                            }
+                            if ($func == 'sin') {
+                                return sin(deg2rad($val));
+                            } elseif ($func == 'cos') {
+                                return cos(deg2rad($val)); 
+                            } elseif ($func == 'tan') {
+                                return tan(deg2rad($val)); 
+                            } elseif ($func == 'cot') {
+                                return 1 / tan(deg2rad($val)); 
+                            }
+                        }
+
                         function calculateSq($val)
                         {
-                            if (!SqValidator($val)) return 'Неправильная расстановка скобок';
-                            $start = strpos($val, '('); 
-                            if ($start === false) return calculate($val);
-                            $end = $start + 1;
-                            $open = 1;
-                            while ($open && $end < strlen($val)) {
-                                if ($val[$end] == '(') $open++;
-                                if ($val[$end] == ')') $open--;
-                                $end++;
+                            $val = str_replace(' ', '', $val);
+                            if (preg_match('/(sin|cos|tan|cot)\([\d.]+\)/', $val)) {
+                                $val = preg_replace_callback('/(sin|cos|tan|cot)\(([\d.]+)\)/', function($matches) {
+                                    $func = $matches[1];
+                                    $arg = floatval($matches[2]);
+                                    switch ($func) {
+                                        case 'sin':
+                                            return sin(deg2rad($arg));
+                                        case 'cos':
+                                            return cos(deg2rad($arg));
+                                        case 'tan':
+                                            return tan(deg2rad($arg));
+                                        case 'cot':
+                                            return 1 / tan(deg2rad($arg));
+                                        default:
+                                            return 'Неподдерживаемая функция';
+                                    }
+                                }, $val);
                             }
-                            $new_val = substr($val, 0, $start);
-                            $new_val .= calculate(substr($val, $start + 1, $end - $start - 2));
-                            $new_val .= substr($val, $end);
-                            
-                            return calculate($new_val);
+                            return calculate($val);
                         }
                         if (isset($_POST['equation'])) {
                             $res = calculateSq($_POST['equation']);
@@ -238,6 +260,10 @@
                     <button class="pins">(</button>
                     <button class="pins">)</button>
                     <button class="operator pins">*</button>
+                    <button class="operator pins">sin</button>
+                    <button class="operator pins">cos</button>
+                    <button class="operator pins">tan</button>
+                    <button class="operator pins">cot</button>
                     <button class="eval" type="submit">=</button>
                 </div>
             </form>
