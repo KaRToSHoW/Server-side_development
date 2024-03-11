@@ -195,22 +195,21 @@
                             return true;
                         }
 
-                        function calculateTrig($val, $func)
-                        {
-                            if (!is_numeric($val)) {
-                                $val = calculate($val);
-                            }
-                            if ($func == 'sin') {
-                                return sin(deg2rad($val));
-                            } elseif ($func == 'cos') {
-                                return cos(deg2rad($val)); 
-                            } elseif ($func == 'tan') {
-                                return tan(deg2rad($val)); 
-                            } elseif ($func == 'cot') {
-                                return 1 / tan(deg2rad($val)); 
+                        function calculateTrigonometry($func, $arg) {
+                            switch ($func) {
+                                case 'sin':
+                                    return sin(deg2rad($arg));
+                                case 'cos':
+                                    return cos(deg2rad($arg));
+                                case 'tan':
+                                    return tan(deg2rad($arg));
+                                case 'cot':
+                                    return 1 / tan(deg2rad($arg));
+                                default:
+                                    return 'Неподдерживаемая функция';
                             }
                         }
-
+                        
                         function calculateSq($val)
                         {
                             $val = str_replace(' ', '', $val);
@@ -218,26 +217,31 @@
                                 $val = preg_replace_callback('/(sin|cos|tan|cot)\(([\d.]+)\)/', function($matches) {
                                     $func = $matches[1];
                                     $arg = floatval($matches[2]);
-                                    switch ($func) {
-                                        case 'sin':
-                                            return sin(deg2rad($arg));
-                                        case 'cos':
-                                            return cos(deg2rad($arg));
-                                        case 'tan':
-                                            return tan(deg2rad($arg));
-                                        case 'cot':
-                                            return 1 / tan(deg2rad($arg));
-                                        default:
-                                            return 'Неподдерживаемая функция';
-                                    }
+                                    return calculateTrigonometry($func, $arg);
                                 }, $val);
+                            }
+                            if (strpos($val, '(') !== false) {
+                                $start = strpos($val, '(');
+                                $end = $start + 1;
+                                $open = 1;
+                                while ($open && $end < strlen($val)) {
+                                    if ($val[$end] == '(') $open++;
+                                    if ($val[$end] == ')') $open--;
+                                    $end++;
+                                }
+                                $new_val = substr($val, 0, $start);
+                                $new_val .= calculateSq(substr($val, $start + 1, $end - $start - 2));
+                                $new_val .= substr($val, $end);
+                                return calculateSq($new_val);
                             }
                             return calculate($val);
                         }
+                        
                         if (isset($_POST['equation'])) {
                             $res = calculateSq($_POST['equation']);
                             echo $res;
                         };
+                        
                         ?>
                         
                     </div>
