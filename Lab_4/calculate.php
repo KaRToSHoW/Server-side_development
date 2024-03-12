@@ -194,28 +194,27 @@
                             return true;
                         }
 
-                        function calculateSq($val)
-                        {
-                            if (!SqValidator($val)) return 'Неправильная расстановка скобок';
-                            $start = strpos($val, '('); 
-                            if ($start === false) return calculate($val);
-                            $end = $start + 1;
+                        function calculateSq( $val ) { //1+(2+3)
+                            if( !SqValidator($val) ) return 'Неправильная расстановка скобок';
+                            $start = strpos( $val, '('); //start = 2
+                            if( $start === false ) return calculate($val);
+                            $end = $start + 1; //end = 3
                             $open = 1;
-                            while ($open && $end < strlen($val)) {
-                                if ($val[$end] == '(') $open++;
-                                if ($val[$end] == ')') $open--;
-                                $end++;
+                            while( $open && $end < strlen($val) ) {
+                                if( $val[ $end ] == '(' ) $open++;
+                                    if( $val[ $end ] == ')' ) $open--; //open = 0 end = 6
+                                    $end++; //3 4 5 
                             }
                             $new_val = substr($val, 0, $start);
-                            $new_val .= calculate(substr($val, $start + 1, $end - $start - 2));
+                            $new_val .= calculateSq( substr($val, $start+1, $end-$start - 2) );
                             $new_val .= substr($val, $end);
                             
-                            return calculate($new_val);
-                        }
-                        if (isset($_POST['equation'])) {
-                            $res = calculateSq($_POST['equation']);
-                            echo $res;
-                        };
+                            return calculateSq( $new_val );
+                            }
+                            if (isset($_POST['equation'])) {
+                                $res = calculateSq($_POST['equation']);
+                                echo $res;
+                            };
                         ?>
                     </div>
                 </div>
