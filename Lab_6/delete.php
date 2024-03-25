@@ -24,7 +24,7 @@ if (isset($_GET['p']) && $_GET['p'] === 'delete' && isset($_GET['id'])) {
     $result = mysqli_query($connect, $delete_query);
     if ($result) {
         echo 'Запись с именем ' . $deleted_firstname . ' удалена' . '<br>';
-        $sql = "ALTER TABLE friends AUTO_INCREMENT = 1"; //Обновление порядка ID
+        $sql = "ALTER TABLE friends AUTO_INCREMENT = 1"; //Обновление порядка ID Когда список пуст
         $res = mysqli_query($connect, $sql);
     } else {
         echo 'Ошибка при удалении записи: ' . mysqli_error($connect);
