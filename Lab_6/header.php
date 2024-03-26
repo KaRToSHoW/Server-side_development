@@ -14,7 +14,6 @@
             font-weight: bold;
             color: blue;
         }
-        
     </style>
 </head>
 
@@ -47,8 +46,8 @@
         $o = isset($_GET['o']) ? $_GET['o'] : '';
         if ($_GET['p'] == 'view') : ?>
             <div class="btn-group mb-3" role="group" aria-label="Basic example">
-                <a href="?p=view&o=id" class="btn btn-secondary <?php echo ($o == 'id') ? 'active' : ''; ?>">Id</a>
-                <a href="?p=view&o=date" class="btn btn-secondary <?php echo ($o == 'date') ? 'active' : ''; ?>">Date</a>
-                <a href="?p=view&o=lastname" class="btn btn-secondary <?php echo ($o == 'lastname') ? 'active' : ''; ?>">Lastname</a>
+                <a href="?&o=id" class="btn btn-secondary <?php echo ($o == 'id') ? 'active' : ''; ?>">Id</a>
+                <a href="?&o=date" class="btn btn-secondary <?php echo ($o == 'date') ? 'active' : ''; ?>">Date</a>
+                <a href="?&o=lastname" class="btn btn-secondary <?php echo ($o == 'lastname') ? 'active' : ''; ?>">Lastname</a>
             </div>
         <?php endif; ?>

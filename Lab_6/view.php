@@ -1,18 +1,14 @@
 <?php
-    if (!isset($_GET['o'])) $_GET['o'] ='id';
+    $rows_view = 5;
     
-    $pages = 5;
-    $page = isset($_GET['page']) && is_numeric($_GET['page']) ? $_GET['page'] : 1;
-    $offset_page = ($page - 1) * $pages;
-    
-    $sql = 'SELECT * FROM `friends` ORDER BY `' . $_GET['o'] . '` LIMIT ' . $offset_page . ', ' . $pages;
+    $sql = 'SELECT COUNT(*) FROM `friends`';
     $res = mysqli_query($connect, $sql);
-    if (mysqli_errno($connect)) print_r(mysqli_error($connect));
-    
-    $row = mysqli_num_rows($res);
-    $total_rows_query = mysqli_query($connect, 'SELECT COUNT(*) as total FROM `friends`');
-    $total_rows = mysqli_fetch_assoc($total_rows_query)['total'];
-    $total_pages = ceil($total_rows / $pages);
+    $rows = mysqli_fetch_row($res)[0];
+
+    $sql = 'SELECT * FROM `friends` ORDER BY `' . $_GET['o'] . '` LIMIT '.$_GET['page']*$rows_view.','.$rows_view.'';
+    $res = mysqli_query($connect, $sql);
+    if (mysqli_errno($connect)) print_r(mysqli_stmt_error($connect));
+    $pages = ceil($rows/$rows_view);
 ?>
 
 <table class="table">
@@ -49,8 +45,10 @@
 </table>
 <nav aria-label="...">
     <ul class="pagination pagination-sm">
-        <?php for($i = 1; $i <= $total_pages; $i++):?>
-            <li class="page-item <?= $page == $i ? 'active' : '' ?>"><a class="page-link" href="<?=$_SERVER['SCRIPT_NAME'];?>?page=<?=$i;?>"><?=$i?></a></li>
+        <?php for($i = 0; $i < $pages; $i++): ?>
+            <li class="page-item <?php if(isset($_GET['page']) && $_GET['page'] == $i) echo 'active'; ?>">
+                <a class="page-link" href="<?=$_SERVER['SCRIPT_NAME'];?>?page=<?=$i;?>&o=<?=$_GET['o'];?>"><?=$i+1?></a>
+            </li>
         <?php endfor;?>
     </ul>
 </nav>
