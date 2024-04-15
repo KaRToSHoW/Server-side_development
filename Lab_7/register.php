@@ -4,16 +4,23 @@ session_start();
 
 <!doctype html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <title>Авторизация и регистрация</title>
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
+
 <body>
     <header>
-        <nav>
-            <a class="active" href="./register.php">Регистрация</a>
-            <a href="./index.php">Авторизация</a>
+    <nav>
+        <?php if (!isset($_SESSION['user'])) { ?>
+                <a class="active" href="./register.php">Регистрация</a>
+                <a href="./index.php">Авторизация</a>
+            <?php } ?>
+            <?php if (isset($_SESSION['user'])) { ?>
+                <a href="./profile.php">Профиль</a>
+            <?php } ?>
             <a href="./addPost.php">Посты</a>
         </nav>
     </header>
@@ -40,12 +47,13 @@ session_start();
                 У вас уже есть аккаунт? - <a href="./index.php">авторизуйтесь</a>!
             </p>
             <?php
-                if (isset($_SESSION['message'])) {
-                    echo '<p class="msg"> ' . $_SESSION['message'] . ' </p>';
-                    unset($_SESSION['message']);
-                }
+            if (isset($_SESSION['message'])) {
+                echo '<p class="msg"> ' . $_SESSION['message'] . ' </p>';
+                unset($_SESSION['message']);
+            }
             ?>
         </form>
     </main>
 </body>
+
 </html>

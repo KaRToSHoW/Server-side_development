@@ -3,6 +3,7 @@ session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -17,14 +18,20 @@ session_start();
   </style>
   <title>Document</title>
 </head>
+
 <body>
   <header>
-        <nav>
-            <a href="./register.php">Регистрация</a>
-            <a href="./index.php">Авторизация</a>
-            <a class="active" href="./addPost.php">Посты</a>
-        </nav>
-    </header>
+    <nav>
+    <?php if (!isset($_SESSION['user'])) { ?>
+                <a href="./register.php">Регистрация</a>
+                <a href="./index.php">Авторизация</a>
+            <?php } ?>
+            <?php if (isset($_SESSION['user'])) { ?>
+                <a href="./profile.php">Профиль</a>
+            <?php } ?>
+      <a class="active" href="./addPost.php">Посты</a>
+    </nav>
+  </header>
   <main>
     <section class="navigation-post">
       <ul class="navigation-post__list">
@@ -37,42 +44,42 @@ session_start();
       <ul class="news-line__list">
         <?php
         require_once './vendor/connect.php';
-        
+
         // Запрос для выборки всех хештегов из таблицы hashtags и связанных сообщений
         $sql = "SELECT hashtags.name AS hashtag_name, GROUP_CONCAT(sms.Description SEPARATOR '|') AS messages, GROUP_CONCAT(users.full_name) AS senders
                 FROM hashtags
                 LEFT JOIN sms ON FIND_IN_SET(hashtags.id, sms.hashtag_id)
                 LEFT JOIN users ON sms.user_id = users.id
                 GROUP BY hashtags.name";
-        
+
         $result = $connect->query($sql);
-        
+
         // Если есть хештеги, выводим сообщения для каждого хештега
         if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $hashtag_name = $row["hashtag_name"];
-                $messages = explode('|', $row["messages"]);
-                $senders = explode(',', $row["senders"]);
-                
-                echo "<li class='news-line__item'>";
-                echo "<p class='news-line__message'>#" . $hashtag_name . "</p>";
-                
-                // Выводим отправителя и соответствующее сообщение для каждой группы
-                foreach ($messages as $index => $message) {
-                    $sender = $senders[$index];
-                    echo "<p class='news-line__user'>От: " . $sender . "</p>";
-                    echo "<p class='news-line__hastags'>Сообщение: " . $message . "</p>";
-                    
-                    // Добавляем разделитель после каждого отправителя, кроме последнего
-                    if ($index < count($messages) - 1) {
-                        echo "<div class='sender-divider'></div>";
-                    }
-                }
-                
-                echo "</li>";
+          while ($row = $result->fetch_assoc()) {
+            $hashtag_name = $row["hashtag_name"];
+            $messages = explode('|', $row["messages"]);
+            $senders = explode(',', $row["senders"]);
+
+            echo "<li class='news-line__item'>";
+            echo "<p class='news-line__message'>#" . $hashtag_name . "</p>";
+
+            // Выводим отправителя и соответствующее сообщение для каждой группы
+            foreach ($messages as $index => $message) {
+              $sender = $senders[$index];
+              echo "<p class='news-line__user'>От: " . $sender . "</p>";
+              echo "<p class='news-line__hastags'>Сообщение: " . $message . "</p>";
+
+              // Добавляем разделитель после каждого отправителя, кроме последнего
+              if ($index < count($messages) - 1) {
+                echo "<div class='sender-divider'></div>";
+              }
             }
+
+            echo "</li>";
+          }
         } else {
-            echo "<p>Нет хештегов.</p>";
+          echo "<p>Нет хештегов.</p>";
         }
         ?>
       </ul>
@@ -81,4 +88,5 @@ session_start();
   <footer>
   </footer>
 </body>
+
 </html>

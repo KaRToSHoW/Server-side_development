@@ -3,6 +3,7 @@ session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,14 +11,20 @@ session_start();
   <link rel="stylesheet" href="./assets/css/main.css">
   <title>Document</title>
 </head>
+
 <body>
   <header>
-        <nav>
-            <a href="./register.php">Регистрация</a>
-            <a href="./index.php">Авторизация</a>
-            <a class="active" href="./addPost.php">Посты</a>
-        </nav>
-    </header>
+    <nav>
+    <?php if (!isset($_SESSION['user'])) { ?>
+                <a href="./register.php">Регистрация</a>
+                <a href="./index.php">Авторизация</a>
+            <?php } ?>
+            <?php if (isset($_SESSION['user'])) { ?>
+                <a href="./profile.php">Профиль</a>
+            <?php } ?>
+      <a class="active" href="./addPost.php">Посты</a>
+    </nav>
+  </header>
   <main>
     <section class="navigation-post">
       <ul class="navigation-post__list">
@@ -39,10 +46,11 @@ session_start();
   <footer>
     <?php
     if (isset($_SESSION['message'])) {
-        echo '<p class="msg"> ' . $_SESSION['message'] . ' </p>';
-        unset($_SESSION['message']);
+      echo '<p class="msg"> ' . $_SESSION['message'] . ' </p>';
+      unset($_SESSION['message']);
     }
     ?>
-</footer>
+  </footer>
 </body>
+
 </html>

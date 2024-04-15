@@ -4,16 +4,23 @@ session_start();
 
 <!doctype html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <title>Авторизация и регистрация</title>
     <link rel="stylesheet" href="assets/css/main.css">
 </head>
+
 <body>
     <header>
         <nav>
-            <a class="active" href="./register.php">Регистрация</a>
-            <a href="./index.php">Авторизация</a>
+        <?php if (!isset($_SESSION['user'])) { ?>
+                <a href="./register.php">Регистрация</a>
+                <a class="active" href="./index.php">Авторизация</a>
+            <?php } ?>
+            <?php if (isset($_SESSION['user'])) { ?>
+                <a href="./profile.php">Профиль</a>
+            <?php } ?>
             <a href="./addPost.php">Посты</a>
         </nav>
     </header>
@@ -28,4 +35,5 @@ session_start();
     </main>
 
 </body>
+
 </html>

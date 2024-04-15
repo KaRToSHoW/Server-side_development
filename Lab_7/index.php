@@ -12,13 +12,18 @@ session_start();
 <body>
     <header>
         <nav>
-            <a href="./register.php">Регистрация</a>
-            <a class="active" href="./index.php">Авторизация</a>
+            <?php if (!isset($_SESSION['user'])) { ?>
+                <a href="./register.php">Регистрация</a>
+                <a class="active" href="./index.php">Авторизация</a>
+            <?php } ?>
+            <?php if (isset($_SESSION['user'])) { ?>
+                <a href="./profile.php">Профиль</a>
+            <?php } ?>
             <a href="./addPost.php">Посты</a>
         </nav>
     </header>
 
-<!-- Форма авторизации -->
+    <!-- Форма авторизации -->
     <main>
         <section>
             <form action="vendor/signin.php" method="post">
