@@ -25,7 +25,6 @@ session_start();
         </nav>
     </header>
 
-    <!-- Профиль -->
     <main>
         <form>
             <h2 style="margin: 10px 0;"><?= $_SESSION['user']['full_name'] ?></h2>
