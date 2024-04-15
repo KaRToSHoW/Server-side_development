@@ -39,7 +39,7 @@ session_start();
         require_once './vendor/connect.php';
         
         // Запрос для выборки всех хештегов из таблицы hashtags и связанных сообщений
-        $sql = "SELECT hashtags.name AS hashtag_name, GROUP_CONCAT(sms.Description) AS messages, GROUP_CONCAT(users.full_name) AS senders
+        $sql = "SELECT hashtags.name AS hashtag_name, GROUP_CONCAT(sms.Description SEPARATOR '|') AS messages, GROUP_CONCAT(users.full_name) AS senders
                 FROM hashtags
                 LEFT JOIN sms ON FIND_IN_SET(hashtags.id, sms.hashtag_id)
                 LEFT JOIN users ON sms.user_id = users.id
@@ -51,7 +51,7 @@ session_start();
         if ($result->num_rows > 0) {
             while ($row = $result->fetch_assoc()) {
                 $hashtag_name = $row["hashtag_name"];
-                $messages = explode(',', $row["messages"]);
+                $messages = explode('|', $row["messages"]);
                 $senders = explode(',', $row["senders"]);
                 
                 echo "<li class='news-line__item'>";
@@ -60,7 +60,7 @@ session_start();
                 // Выводим отправителя и соответствующее сообщение для каждой группы
                 foreach ($messages as $index => $message) {
                     $sender = $senders[$index];
-                    echo "<p class='news-line__user'>Пользователь: " . $sender . "</p>";
+                    echo "<p class='news-line__user'>От: " . $sender . "</p>";
                     echo "<p class='news-line__hastags'>Сообщение: " . $message . "</p>";
                     
                     // Добавляем разделитель после каждого отправителя, кроме последнего
