@@ -54,7 +54,8 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  }
+  gap: 10px;
+}
 
 a {
   color: #7c9ab7;
