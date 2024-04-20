@@ -21,7 +21,9 @@ session_start();
             <?php if (isset($_SESSION['user'])) { ?>
                 <a href="./profile.php">Профиль</a>
             <?php } ?>
-            <a href="./addPost.php">Посты</a>
+            <?php if (isset($_SESSION['user'])) { ?>
+                <a href="./addPost.php">Посты</a>
+            <?php } ?>
         </nav>
     </header>
 

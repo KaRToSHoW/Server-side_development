@@ -70,7 +70,6 @@ session_start();
               echo "<p class='news-line__user'>От: " . $sender . "</p>";
               echo "<p class='news-line__hastags'>Сообщение: " . $message . "</p>";
 
-              // Добавляем разделитель после каждого отправителя, кроме последнего
               if ($index < count($messages) - 1) {
                 echo "<div class='sender-divider'></div>";
               }
