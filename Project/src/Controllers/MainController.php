@@ -1,12 +1,18 @@
 <?php
-    namespace Controllers;
+
+namespace Controllers;
+use View\View;
 
     class MainController{
-        public function main(){
-            echo 'Загружено';
+        public $view;
+        public function __construct(){
+            $this->view = new View(__DIR__.'/../../templates/');
         }
+        public function main(){
+            $this->view->renderHtml('main/main.php');
+        }
+
         public function sayHello(string $name){
-            echo "hello, $name";
-            // $this->view->renderHtml('main/hello.php', ['name' => $name]);
+            $this->view->renderHtml('main/hello.php',['name' => $name]);
         }
     }
