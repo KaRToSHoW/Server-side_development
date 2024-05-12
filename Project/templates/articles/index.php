@@ -10,9 +10,9 @@
   <tbody>
     <?php foreach($articles as $article):?>
     <tr>
-      <th scope="row"><a href="<?=dirname($_SERVER['SCRIPT_NAME']).'/article/'.$article['id'];?>"><?=$article['name'];?></a></th>
-      <td><?=$article['text'];?></td>
-      <td><?=$article['author_id'];?></td>
+      <th scope="row"><a href="<?=dirname($_SERVER['SCRIPT_NAME']).'/article/'.$article->getId();?>"><?=$article->getName();?></a></th>
+      <td><?=$article->getText();?></td>
+      <td><?=$article->getAuthorId();?></td>
     </tr>
     <?php endforeach;?>
   </tbody>

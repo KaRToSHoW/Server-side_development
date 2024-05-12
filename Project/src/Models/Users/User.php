@@ -2,11 +2,22 @@
 namespace Models\Users;
 
 class User{
-        public function __construct(
-            private string $name,
-        ){}
 
-        public function getName(){
-            return $this->name;
+        private string $nickname;
+        private string $email;
+        private string $role;
+        private string $id;
+
+        public function getNickname(){
+            return $this->nickname;
+        }
+        public function getEmail(){
+            return $this->email;
+        }
+        public function getRole(){
+            return $this->role;
+        }
+        public function getId(){
+            return $this->id;
         }
     }

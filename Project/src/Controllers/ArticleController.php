@@ -2,27 +2,35 @@
 
 namespace Controllers;
 use View\View;
-use Services\Db;
+use Models\Articles\Article;
+use Models\Users\User;
 
 class ArticleController{
     public $view;
-    public $db;
 
     public function __construct(){
         $this->view = new View(__DIR__.'/../../templates/');
-        $this->db = new Db;
+
     }
     
     public function index(){
-        $sql = 'SELECT * FROM `articles`';
-        $articles = $this->db->query($sql);
+        $articles = Article::findAll();
         // var_dump($articles);
         $this->view->renderHtml('articles/index.php', ['articles'=>$articles]);
     }
 
     public function show(int $id){
-        $sql = 'SELECT * FROM `articles` WHERE `id`='.$id;
-        $article = $this->db->query($sql);
-        var_dump($article);
+        // $sql = 'SELECT * FROM `articles` WHERE `id`='.$id;
+        // $article = $this->db->query($sql, [], Article::class);
+        // if ($article === []){
+        //     $this->view->renderHtml('errors/error.php', [], 404);
+        //     return;
+        // }
+        // $sql_user = 'SELECT `nickname` FROM `users` WHERE `id`='.$article[0]->getAuthorId();
+        // $user = $this->db->query($sql_user, [], User::class);
+        // // var_dump($article);
+        // // echo '<br>';
+        // // var_dump($user);
+        // $this->view->renderHtml('articles/show.php', ['article'=>$article[0], 'user'=>$user[0]]);
     }
 }
