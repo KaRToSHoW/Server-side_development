@@ -20,7 +20,7 @@
         <div class="navbar-nav">
             <a class="nav-link" href="<?=dirname($_SERVER['SCRIPT_NAME']);?>/hello/ivan">Hello</a>
             <a class="nav-link active" href="<?=dirname($_SERVER['SCRIPT_NAME']);?>/articles">Articles<span class="sr-only">(current)</span></a>
-            <a class="nav-link" href="<?=dirname($_SERVER['SCRIPT_NAME']);?>/article">Create article</a>
+            <a class="nav-link" href="<?=dirname($_SERVER['SCRIPT_NAME']);?>/article/create">Create article</a>
         </div>
     </div>
     </nav>

@@ -15,22 +15,48 @@ class ArticleController{
     
     public function index(){
         $articles = Article::findAll();
-        // var_dump($articles);
         $this->view->renderHtml('articles/index.php', ['articles'=>$articles]);
     }
 
     public function show(int $id){
-        // $sql = 'SELECT * FROM `articles` WHERE `id`='.$id;
-        // $article = $this->db->query($sql, [], Article::class);
-        // if ($article === []){
-        //     $this->view->renderHtml('errors/error.php', [], 404);
-        //     return;
-        // }
-        // $sql_user = 'SELECT `nickname` FROM `users` WHERE `id`='.$article[0]->getAuthorId();
-        // $user = $this->db->query($sql_user, [], User::class);
-        // // var_dump($article);
-        // // echo '<br>';
-        // // var_dump($user);
-        // $this->view->renderHtml('articles/show.php', ['article'=>$article[0], 'user'=>$user[0]]);
+        $article = Article::getByid($id);
+        if ($article === []){
+            $this->view->renderHtml('errors/error.php', [], 404);
+            return;
+        }
+        $user = User::getFieldById('nickname', $article->getAuthorId());
+        $this->view->renderHtml('articles/show.php', ['article'=>$article, 'user'=>$user]);
+    }
+    public function create(){
+        return $this->view->renderHtml('articles/create.php');
+    }
+    public function store(){
+        $article = new Article;
+        // var_dump($_POST);
+        $article->setName($_POST['name']);
+        $article->setText($_POST['text']);
+        $article->setAuthorId($_POST['authorId']);
+        $article->save();
+        header('Location:student-231/Project/www/articles');
+    }
+
+    public function edit($id){
+        $article = Article::getById($id);
+        return $this->view->renderHtml('articles/edit.php', ['article'=>$article]);
+    }
+
+    public function update($id){
+        $article = Article::getById($id);
+        // var_dump($_POST);
+        $article->setName($_POST['name']);
+        $article->setText($_POST['text']);
+        $article->setAuthorId($_POST['authorId']);
+        $article->save();
+        header('Location:'.dirname($_SERVER['SCRIPT_NAME']).'/article/'.$article->getId());
+    }
+    public function delete($id){
+        $article = Article::getById($id);
+        $article->delete();
+        header('Location:student-231/Project/www/articles');
     }
 }
