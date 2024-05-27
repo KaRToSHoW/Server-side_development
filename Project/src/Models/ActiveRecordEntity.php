@@ -14,6 +14,5 @@
             $sql = 'SELECT * FROM `'.static::getTableName().'`';
             return self::$db->query($sql, [], static::class);
         }
-
         abstract protected static function getTableName();
     }
