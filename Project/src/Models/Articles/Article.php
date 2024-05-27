@@ -5,25 +5,11 @@ use Models\ActiveRecordEntity;
 use Models\Users\User;
 
 class Article extends ActiveRecordEntity{
-            private $id;
-            private $name;
-            private $text;
-            private $authorId;
-            private $createdAt;
+            protected $name;
+            protected $text;
+            protected $authorId;
+            protected $createdAt;
 
-            private function formatUppercaseToCamelcase(string $key): string
-            {
-                return lcfirst(str_replace('_', '', ucwords($key, '_')));
-            }
-
-            public function __set($key, $value){
-                $property = $this->formatUppercaseToCamelcase($key);
-                $this->$property = $value;
-            }
-
-            public function getId(){
-                return $this->id;
-            }
             public function getName(){
                 return $this->name;
             }
@@ -32,6 +18,15 @@ class Article extends ActiveRecordEntity{
             }
             public function getAuthorId(){
                 return $this->authorId;
+            }
+            public function setName(string $name){
+                $this->name = $name;
+            }
+            public function setText(string $text){
+                $this->text = $text;
+            }
+            public function setAuthorId(string $authorId){
+                $this->authorId = $authorId;
             }
 
             protected static function getTableName(){

@@ -1,12 +1,16 @@
 <?php
 namespace Models\Users;
 
-class User{
+use Models\ActiveRecordEntity;
 
-        private string $nickname;
-        private string $email;
-        private string $role;
-        private string $id;
+class User extends ActiveRecordEntity{
+    protected $nickname;
+    protected $email;
+    protected $isConfirmed;
+    protected $role;
+    protected $passwordHash;
+    protected $authToken;
+    protected $createdAt;
 
         public function getNickname(){
             return $this->nickname;
@@ -17,7 +21,7 @@ class User{
         public function getRole(){
             return $this->role;
         }
-        public function getId(){
-            return $this->id;
+        protected static function getTableName(){
+            return 'users';
         }
     }
