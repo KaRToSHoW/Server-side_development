@@ -1,5 +1,4 @@
 <?php
-
 namespace Controllers;
 
 use View\View;
@@ -21,19 +20,18 @@ class ArticleController {
 
     public function show(int $id) {
         $article = Article::getById($id);
-        if ($article === null) {  // Проверяем, что статья не null
+        if ($article === null) {
             $this->view->renderHtml('errors/error.php', [], 404);
             return;
         }
-        $user = User::getById($article->getAuthorId());
-        $comments = Comment::getAllByArticleId($id);
+        $user = User::getFieldById('nickname', $article->getAuthorId());
+        $comments = Comment::findByArticleId($id);
         $this->view->renderHtml('articles/show.php', [
             'article' => $article,
             'user' => $user,
             'comments' => $comments
         ]);
     }
-    
 
     public function create() {
         return $this->view->renderHtml('articles/create.php');
@@ -45,26 +43,27 @@ class ArticleController {
         $article->setText($_POST['text']);
         $article->setAuthorId($_POST['authorId']);
         $article->save();
-        header('Location: '.dirname($_SERVER['SCRIPT_NAME']).'/articles');
+        header('Location: ' . dirname($_SERVER['SCRIPT_NAME']) . '/articles');
     }
 
-    public function edit($id) {
+    public function edit(int $id) {
         $article = Article::getById($id);
         return $this->view->renderHtml('articles/edit.php', ['article' => $article]);
     }
 
-    public function update($id) {
+    public function update(int $id) {
         $article = Article::getById($id);
         $article->setName($_POST['name']);
         $article->setText($_POST['text']);
         $article->setAuthorId($_POST['authorId']);
         $article->save();
-        header('Location: '.dirname($_SERVER['SCRIPT_NAME']).'/articles'.$article->getId());
+        header('Location: ' . dirname($_SERVER['SCRIPT_NAME']) . '/article/' . $article->getId());
     }
 
-    public function delete($id) {
+    public function delete(int $id) {
         $article = Article::getById($id);
         $article->delete();
-        header('Location: '.dirname($_SERVER['SCRIPT_NAME']).'/articles');
+        header('Location: ' . dirname($_SERVER['SCRIPT_NAME']) . '/articles');
     }
 }
+
