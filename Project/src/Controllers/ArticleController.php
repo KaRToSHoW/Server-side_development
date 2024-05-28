@@ -45,7 +45,7 @@ class ArticleController {
         $article->setText($_POST['text']);
         $article->setAuthorId($_POST['authorId']);
         $article->save();
-        header('Location: /student-231/Project/www/articles');
+        header('Location: '.dirname($_SERVER['SCRIPT_NAME']).'/articles');
     }
 
     public function edit($id) {
@@ -59,12 +59,12 @@ class ArticleController {
         $article->setText($_POST['text']);
         $article->setAuthorId($_POST['authorId']);
         $article->save();
-        header('Location: '.dirname($_SERVER['SCRIPT_NAME']).'/article/'.$article->getId());
+        header('Location: '.dirname($_SERVER['SCRIPT_NAME']).'/articles'.$article->getId());
     }
 
     public function delete($id) {
         $article = Article::getById($id);
         $article->delete();
-        header('Location: /student-231/Project/www/articles');
+        header('Location: '.dirname($_SERVER['SCRIPT_NAME']).'/articles');
     }
 }
