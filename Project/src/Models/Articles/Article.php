@@ -3,7 +3,7 @@ namespace Models\Articles;
 
 use Models\ActiveRecordEntity;
 use Models\Users\User;
-use Models\Comments\Comment;
+
 class Article extends ActiveRecordEntity{
             protected $name;
             protected $text;
@@ -32,17 +32,5 @@ class Article extends ActiveRecordEntity{
             protected static function getTableName(){
                 return 'articles';
             }
-        
-            public function getComments(): array {
-                return Comment::findByArticleId($this->id);
-            }
-        
-            public function delete() {
-                $comments = $this->getComments();
-                foreach ($comments as $comment) {
-                    $comment->delete();
-                }
-        
-                parent::delete();
-            }
+            
     }
